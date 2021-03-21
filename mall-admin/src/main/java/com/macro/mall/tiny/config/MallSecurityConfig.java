@@ -1,4 +1,4 @@
-package com.macro.mall.config;
+package com.macro.mall.tiny.config;
 
 import com.macro.mall.model.UmsResource;
 import com.macro.mall.security.component.DynamicSecurityService;
