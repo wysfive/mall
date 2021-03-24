@@ -46,6 +46,11 @@ secure:
       - /admin/info
       - /admin/logout
       - /minio/upload
+#      - /admin/**
+#      - /role/**
+#      - /resource/**
+#      - /menu/**
+#      - /resourceCategory/**
 
 aliyun:
   oss:
