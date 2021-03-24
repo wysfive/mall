@@ -61,12 +61,16 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public UmsAdmin getAdminByUsername(String username) {
+        // 先从缓存中获取数据
         UmsAdmin admin = adminCacheService.getAdmin(username);
         if(admin!=null) return  admin;
+        // 如果没有就从数据库中获取
         UmsAdminExample example = new UmsAdminExample();
         example.createCriteria().andUsernameEqualTo(username);
+        // 获取到的角色列表
         List<UmsAdmin> adminList = adminMapper.selectByExample(example);
         if (adminList != null && adminList.size() > 0) {
+            // 如果存在就存入缓存中
             admin = adminList.get(0);
             adminCacheService.setAdmin(admin);
             return admin;
@@ -223,12 +227,15 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public List<UmsResource> getResourceList(Long adminId) {
+        // 先从缓存中获取数据
         List<UmsResource> resourceList = adminCacheService.getResourceList(adminId);
         if(CollUtil.isNotEmpty(resourceList)){
             return  resourceList;
         }
+        // 缓存中没有的话就从数据库取
         resourceList = adminRoleRelationDao.getResourceList(adminId);
         if(CollUtil.isNotEmpty(resourceList)){
+            // 将数据库中的数据存到缓存中
             adminCacheService.setResourceList(adminId,resourceList);
         }
         return resourceList;
